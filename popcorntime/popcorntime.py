@@ -41,11 +41,12 @@ class PopcornTime:
             :return: dict (Example: {"status": "success", "data": {"shows": []}})
         """
 
-        req = requests.get(url, **kwargs)
-        if req.status_code != 200:
-            self.log.error(f'Request to {url} failed with status code {req.status_code}')
-            return None
-        return req.json()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, **kwargs) as resp:
+                if resp.status != 200:
+                    self.log.error(f'Request to {url} failed with status code {resp.status}')
+                    return None
+                return await resp.json()
 
     def _build_url(self, path: str) -> str:
         """
