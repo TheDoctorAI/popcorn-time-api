@@ -7,6 +7,7 @@ maintainers = ["TheDoctorAI <49969231+thedoctorai@users.noreply.github.com>"]
 license = "MIT"
 repository = "https://github.com/DEADSEC-SECURITY/popcorn-time-api"
 homepage = "https://github.com/DEADSEC-SECURITY/popcorn-time-api"
+readme = "README.md"
 keywords=[
         "popcorn",
         "popcorntime",
