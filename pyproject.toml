@@ -37,6 +37,7 @@ urllib3 = "^1.26"
 webencodings = "^0.5"
 wrapt = "^1.13"
 zipp = "^3.7"
+aiohttp = "^3.8.1"
 
 [tool.poetry.dev-dependencies]
 

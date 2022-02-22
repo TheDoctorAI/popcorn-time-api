@@ -1,3 +1,5 @@
+import asyncio
+import aiohttp
 import requests
 import logging
 import sys
@@ -30,7 +32,7 @@ class PopcornTime:
         self._MIN_PEERS = min_peers
         self._MIN_SEEDS = min_seeds
 
-    def _get(self, url: str, **kwargs) -> (requests.Response.json, None):
+    async def _get(self, url: str, **kwargs) -> (requests.Response.json, None):
         """
             Performs a GET request to the url provided and returns the response
 
@@ -134,35 +136,35 @@ class PopcornTime:
 
         return self._MIN_PEERS
 
-    def get_server_status(self) -> (requests.Response.json, None):
+    async def get_server_status(self) -> (requests.Response.json, None):
         """
             Get the server status
 
             :return: dict (Example: {"repo": ..., "version": ..., "uptime": ...})
         """
 
-        status = self._get(self._build_url('/status'))
+        status = await self._get(self._build_url('/status'))
 
         if status:
             self.log.info('Got status')
             return status
         return None
 
-    def get_shows_stats(self) -> (requests.Response.json, None):
+    async def get_shows_stats(self) -> (requests.Response.json, None):
         """
             Get the shows stats
 
             :return: dict (Example: {"action & adventure": {"count": 600, "title": "Action & Adventure"}})
         """
 
-        stats = self._get(self._build_url('/shows/stat'))
+        stats = await self._get(self._build_url('/shows/stat'))
 
         if stats:
             self.log.info('Got shows stats')
             return stats
         return None
 
-    def get_shows_page(self, page: (int, str)) -> (requests.Response.json, None):
+    async def get_shows_page(self, page: (int, str)) -> (requests.Response.json, None):
         """
             Gets the shows page
 
@@ -170,14 +172,14 @@ class PopcornTime:
             :return: dict (Example: {_id: "...", ...})
         """
 
-        shows = self._get(self._build_url(f'/shows/{page}'))
+        shows = await self._get(self._build_url(f'/shows/{page}'))
 
         if shows:
             self.log.info(f'Got shows page {page}')
             return shows
         return None
 
-    def get_show(self, show_id: (int, str)) -> (requests.Response.json, None):
+    async def get_show(self, show_id: (int, str)) -> (requests.Response.json, None):
         """
             Get the show
 
@@ -185,28 +187,28 @@ class PopcornTime:
             :return: dict (Example: {"status": "success", "data": {"show": {"...show data..."}}}
         """
 
-        show = self._get(self._build_url(f'/show/{show_id}'))
+        show = await self._get(self._build_url(f'/show/{show_id}'))
 
         if show:
             self.log.info(f'Got show {show_id}')
             return show
         return None
 
-    def get_random_show(self) -> (requests.Response.json, None):
+    async def get_random_show(self) -> (requests.Response.json, None):
         """
             Get a random show
 
             :return: dict (Example: {"_id": "...", ...})
         """
 
-        show = self._get(self._build_url(f'/random/show'))
+        show = await self._get(self._build_url(f'/random/show'))
 
         if show:
             self.log.info(f'Got random show {show["_id"]}')
             return show
         return None
 
-    def get_best_torrent(self, torrents: dict, min_quality: int = 1080, revert_to_default: bool = False) -> (dict, None):
+    async def get_best_torrent(self, torrents: dict, min_quality: int = 1080, revert_to_default: bool = False) -> (dict, None):
         """
             Get the best torrent
 
@@ -289,21 +291,21 @@ class PopcornTime:
         logging.info('No torrents meet the minimum requirements and no torrent to revert to')
         return None
 
-    def get_movies_stats(self) -> (requests.Response.json, None):
+    async def get_movies_stats(self) -> (requests.Response.json, None):
         """
             Get the movies stats
 
             :return: dict (Example: {"action & adventure": {"count": 600, "title": "Action & Adventure"}})
         """
 
-        stats = self._get(self._build_url('/movies/stat'))
+        stats = await self._get(self._build_url('/movies/stat'))
 
         if stats:
             self.log.info('Got movies stats')
             return stats
         return None
 
-    def get_movies_page(self, page: (int, str)) -> (requests.Response.json, None):
+    async def get_movies_page(self, page: (int, str)) -> (requests.Response.json, None):
         """
             Gets the movies page
 
@@ -311,14 +313,14 @@ class PopcornTime:
             :return: dict (Example: {_id: "...", ...})
         """
 
-        movies = self._get(self._build_url(f'/movies/{page}'))
+        movies = await self._get(self._build_url(f'/movies/{page}'))
 
         if movies:
             self.log.info(f'Got movies page {page}')
             return movies
         return None
 
-    def get_movie(self, movie_id: (int, str)) -> (requests.Response.json, None):
+    async def get_movie(self, movie_id: (int, str)) -> (requests.Response.json, None):
         """
             Get the movie
 
@@ -326,20 +328,20 @@ class PopcornTime:
             :return: dict (Example: {_id: "...", ...})
         """
 
-        movie = self._get(self._build_url(f'/movie/{movie_id}'))
+        movie = await self._get(self._build_url(f'/movie/{movie_id}'))
 
         if movie:
             self.log.info(f'Got movie {movie_id}')
             return movie
         return None
 
-    def get_random_movie(self) -> (requests.Response.json, None):
+    async def get_random_movie(self) -> (requests.Response.json, None):
         """
             Gets a random movie from the api
 
             :return: dict (Example: {_id: "...", ...})
         """
-        movie = self._get(self._build_url(f'/random/movie'))
+        movie = await self._get(self._build_url(f'/random/movie'))
 
         if movie:
             self.log.info(f'Got random movie {movie["_id"]}')
