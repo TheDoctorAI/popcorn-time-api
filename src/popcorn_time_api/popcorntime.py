@@ -1,6 +1,4 @@
-import asyncio
 import aiohttp
-import requests
 import logging
 import sys
 import unittest
