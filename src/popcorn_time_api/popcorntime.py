@@ -136,7 +136,7 @@ class PopcornTime:
 
         return self._MIN_PEERS
 
-    async def get_server_status(self) -> (requests.Response.json, None):
+    async def get_server_status(self):
         """
             Get the server status
 
@@ -150,7 +150,7 @@ class PopcornTime:
             return status
         return None
 
-    async def get_shows_stats(self) -> (requests.Response.json, None):
+    async def get_shows_stats(self):
         """
             Get the shows stats
 
@@ -164,7 +164,7 @@ class PopcornTime:
             return stats
         return None
 
-    async def get_shows_page(self, page: (int, str)) -> (requests.Response.json, None):
+    async def get_shows_page(self, page: (int, str)):
         """
             Gets the shows page
 
@@ -179,7 +179,7 @@ class PopcornTime:
             return shows
         return None
 
-    async def get_show(self, show_id: (int, str)) -> (requests.Response.json, None):
+    async def get_show(self, show_id: (int, str)):
         """
             Get the show
 
@@ -194,7 +194,7 @@ class PopcornTime:
             return show
         return None
 
-    async def get_random_show(self) -> (requests.Response.json, None):
+    async def get_random_show(self):
         """
             Get a random show
 
@@ -291,7 +291,7 @@ class PopcornTime:
         logging.info('No torrents meet the minimum requirements and no torrent to revert to')
         return None
 
-    async def get_movies_stats(self) -> (requests.Response.json, None):
+    async def get_movies_stats(self):
         """
             Get the movies stats
 
@@ -305,7 +305,7 @@ class PopcornTime:
             return stats
         return None
 
-    async def get_movies_page(self, page: (int, str)) -> (requests.Response.json, None):
+    async def get_movies_page(self, page: (int, str)):
         """
             Gets the movies page
 
@@ -320,7 +320,7 @@ class PopcornTime:
             return movies
         return None
 
-    async def get_movie(self, movie_id: (int, str)) -> (requests.Response.json, None):
+    async def get_movie(self, movie_id: (int, str)):
         """
             Get the movie
 
@@ -335,7 +335,7 @@ class PopcornTime:
             return movie
         return None
 
-    async def get_random_movie(self) -> (requests.Response.json, None):
+    async def get_random_movie(self):
         """
             Gets a random movie from the api
 
