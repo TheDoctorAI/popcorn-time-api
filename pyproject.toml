@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "popcorn-time-api"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+astroid = "^2.9"
+bleach = "^4.1"
+certifi = "^2021.10"
+charset-normalizer = "^2.0"
+colorama = "^0.4"
+docutils = "^0.18"
+idna = "^3.3"
+importlib-metadata = "^4.10"
+isort = "^5.10"
+keyring = "^23.5"
+lazy-object-proxy = "^1.7"
+mccabe = "^0.6"
+packaging = "^21.3"
+pkginfo = "^1.8"
+platformdirs = "^2.4"
+Pygments = "^2.11"
+pylint = "^2.12"
+pyparsing = "^3.0"
+pywin32-ctypes = "^0.2"
+readme-renderer = "^32.0"
+requests = "^2.27"
+requests-toolbelt = "^0.9"
+rfc3986 = "^1.5"
+six = "^1.16"
+toml = "^0.10"
+tqdm = "^4.62"
+twine = "^3.7"
+urllib3 = "^1.26"
+webencodings = "^0.5"
+wrapt = "^1.13"
+zipp = "^3.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
