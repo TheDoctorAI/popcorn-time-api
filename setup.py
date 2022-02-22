@@ -13,6 +13,7 @@ package_data = \
 install_requires = \
 ['Pygments>=2.11,<3.0',
  'aiohttp>=3.8.1,<4.0.0',
+ 'aiounittest>=1.4.1,<2.0.0',
  'astroid>=2.9,<3.0',
  'bleach>=4.1,<5.0',
  'certifi>=2021.10,<2022.0',
