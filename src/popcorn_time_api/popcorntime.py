@@ -1,14 +1,15 @@
+import asyncio
 import aiohttp
 import logging
 import sys
 import unittest
 import functools
-
+import aiounittest
 from urllib.parse import urljoin
 
 
-# Wrapper for deprecated function
 def deprecated(func):
+    # Wrapper for deprecated function
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         logging.warning(f'The function {func.__name__} is deprecated and will be removed in the next major release.')
@@ -30,7 +31,7 @@ class PopcornTime:
         self._MIN_PEERS = min_peers
         self._MIN_SEEDS = min_seeds
 
-    async def _get(self, url: str, **kwargs) -> (requests.Response.json, None):
+    async def _get(self, url: str, **kwargs):
         """
             Performs a GET request to the url provided and returns the response
 
@@ -348,55 +349,54 @@ class PopcornTime:
         return None
 
 
-class TestPopcorn(unittest.TestCase):
+class TestPopcorn(aiounittest.AsyncTestCase):
 
-    def setUp(self):
+    async def setUp(self):
         self.popAPI = PopcornTime()
 
         # Check for internet connection
         logging.info('Testing internet connection ...')
-        req = False
         try:
-            req = requests.get("https://google.com", timeout=10)
+            async with aiohttp.ClientSession() as session:
+                async with session.get("https://google.com", timeout=10) as resp:
+                    if resp.status != 200:
+                        logging.error('Testing internet connection failed, please check your connection and try again!')
+                        sys.exit()
         except Exception:
             pass
 
-        if not req:
-            logging.error('Testing internet connection failed, please check your connection and try again!')
-            sys.exit()
-
         logging.info("Internet connection test was successful")
 
-    def test_get_show_stats(self):
-        self.assertIsNotNone(self.popAPI.get_shows_stats)
+    async def test_get_show_stats(self):
+        self.assertIsNotNone(await self.popAPI.get_shows_stats())
 
-    def test_get_shows_page(self):
-        self.assertIsNotNone(self.popAPI.get_shows_page, 1)
+    async def test_get_shows_page(self):
+        self.assertIsNotNone(await self.popAPI.get_shows_page(1))
 
-    def test_get_show(self):
-        self.assertIsNotNone(self.popAPI.get_show, "tt10160804")
+    async def test_get_show(self):
+        self.assertIsNotNone(await self.popAPI.get_show("tt10160804"))
 
-    def test_get_random_show(self):
-        self.assertIsNotNone(self.popAPI.get_random_show)
+    async def test_get_random_show(self):
+        self.assertIsNotNone(await self.popAPI.get_random_show())
 
-    def test_get_best_torrent(self):
-        movie = self.popAPI.get_movie("tt0111161")
+    async def test_get_best_torrent(self):
+        movie = await self.popAPI.get_movie("tt0111161")
         torrents = movie["torrents"]
-        best = self.popAPI.get_best_torrent(torrents)
+        best = await self.popAPI.get_best_torrent(torrents)
         print(best)
         self.assertIsNotNone(best)
 
-    def test_get_movies_stats(self):
-        self.assertIsNotNone(self.popAPI.get_movies_stats)
+    async def test_get_movies_stats(self):
+        self.assertIsNotNone(await self.popAPI.get_movies_stats())
 
-    def test_get_movie_page(self):
-        self.assertIsNotNone(self.popAPI.get_movies_page, 1)
+    async def test_get_movie_page(self):
+        self.assertIsNotNone(await self.popAPI.get_movies_page(1))
 
-    def test_get_movie(self):
-        self.assertIsNotNone(self.popAPI.get_movie, "tt0111161")
+    async def test_get_movie(self):
+        self.assertIsNotNone(await self.popAPI.get_movie("tt0111161"))
 
-    def test_get_random_movie(self):
-        self.assertIsNotNone(self.popAPI.get_random_movie)
+    async def test_get_random_movie(self):
+        self.assertIsNotNone(await self.popAPI.get_random_movie())
 
 
 if __name__ == '__main__':

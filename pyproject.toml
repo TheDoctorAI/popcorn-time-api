@@ -50,6 +50,7 @@ webencodings = "^0.5"
 wrapt = "^1.13"
 zipp = "^3.7"
 aiohttp = "^3.8.1"
+aiounittest = "^1.4.1"
 
 [tool.poetry.dev-dependencies]
 
