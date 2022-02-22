@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "popcorn-time-api"
-version = "0.2.0"
+version = "0.3.0"
 description = "Interact with the Popcorn Time API with python"
 authors = ["DeadSec-Security <amng835@gmail.com>", "TheDoctorAI <49969231+thedoctorai@users.noreply.github.com>"]
 
